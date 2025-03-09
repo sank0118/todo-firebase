@@ -1,16 +1,39 @@
-import { useState } from "react";
+import { useState,useCallback } from "react";
+import { Container, Form } from "./components/";
 
-interface T {
-  text: string;
-  id: string;
+interface Props {
+  id:string
+  text:string
 }
-const TForm = (text: id, id: string) => {
-  const [todo, setTodo] = useState({});
+
+const TForm = () => {
+  const [todo, setTodo] = useState<Props>({id:"", text:""});
+ 
+  const onSubmit = useCallback(
+   async()=>{
+    try {
+      if(todo.id.lenght ===0){
+        return alert(" 할일을 정확히 입력해세요." )
+      }
+    } catch (error:any) {
+      return alert(error.message)
+    }
+    },[]
+  ) 
+
+  const onChange = (e: React.changeEvent<HTMLInputElement> ) => {
+    setTodo( e.target.value );
+  };
 
   return (
-    <div>
-      <h1>TForm</h1>
-    </div>
+    <Container.Col >
+      <form action="" onSubmit={onSubmit}>
+      <Form.Input
+      onChange={onChange}
+      />
+      </form>
+   
+    </Container.Col>
   );
 };
 
